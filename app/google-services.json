@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "503280972804",
+    "firebase_url": "https://profiler-d2fa2.firebaseio.com",
+    "project_id": "profiler-d2fa2",
+    "storage_bucket": "profiler-d2fa2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:503280972804:android:7e0f547edd928073",
+        "android_client_info": {
+          "package_name": "com.example.aditya.profiler"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "503280972804-qppa66l5dko700k1rv4dbg6809asgufd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.aditya.profiler",
+            "certificate_hash": "3e57ef7013e23039fdcbc14ffda5c3511c9fb657"
+          }
+        },
+        {
+          "client_id": "503280972804-0qi4gvirl2h5kt29n9lfd8ro9a7entup.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQVbd_cCSnYtM3aqEFwzqEWZHAsvFWL-Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "503280972804-0qi4gvirl2h5kt29n9lfd8ro9a7entup.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
