@@ -1,5 +1,8 @@
 package com.example.aditya.profiler;
 
+import android.util.Log;
+import android.util.StringBuilderPrinter;
+
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -7,6 +10,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.firebase.database.ValueEventListener;
+
+import static android.content.ContentValues.TAG;
 
 @IgnoreExtraProperties
 public class User {
@@ -16,8 +21,18 @@ public class User {
     public String username;
     public String email;
 
+    public String name;
+
     public User() {
 
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public User(String username, String email) {
@@ -30,23 +45,19 @@ public class User {
         database.child("users").child(uid).child("Email").setValue(email);
     }
 
-    public String getUsername (final String uid){
-        final String[] username = new String[1];
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+    public String getuname (final String uid){
+        name = database.child("users").child(uid).child("Username").getKey();
+        FirebaseDatabase.getInstance().getReference("users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.getKey().equals("Username")){
-                    username[0] = dataSnapshot.getValue().toString();
-                }
+                User user = dataSnapshot.getValue(User.class);
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(DatabaseError error) {
 
             }
         });
-
-        return username[0];
+        return name;
     }
 }
