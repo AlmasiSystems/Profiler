@@ -1,5 +1,6 @@
 package com.example.aditya.profiler;
 
+import android.os.Handler;
 import android.util.Log;
 import android.util.StringBuilderPrinter;
 
@@ -11,10 +12,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static android.content.ContentValues.TAG;
 
 @IgnoreExtraProperties
-public class User {
+public class User extends HashMap<String, String> {
 
     private DatabaseReference database = FirebaseDatabase.getInstance().getReference();
 
@@ -43,21 +47,5 @@ public class User {
     public void writeNewUser(String uid, String username, String email){
         database.child("users").child(uid).child("Username").setValue(username);
         database.child("users").child(uid).child("Email").setValue(email);
-    }
-
-    public String getuname (final String uid){
-        name = database.child("users").child(uid).child("Username").getKey();
-        FirebaseDatabase.getInstance().getReference("users").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-
-            }
-        });
-        return name;
     }
 }

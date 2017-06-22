@@ -24,8 +24,6 @@ import android.widget.Toast;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    RelativeLayout fragcont;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +32,8 @@ public class HomeActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         setTitle("");
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        TextView txtProfileName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.email_login);
+        TextView txtProfileName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.username_login);
+        TextView txtEmail = (TextView) navigationView.getHeaderView(0).findViewById(R.id.email_login);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -46,11 +45,14 @@ public class HomeActivity extends AppCompatActivity
         SharedPreferences sharedPreferences = getSharedPreferences("User", Context.MODE_PRIVATE);
 
         String email = sharedPreferences.getString("email", null);
-        txtProfileName.setText(email);
+        String name = sharedPreferences.getString("user", null);
+        txtProfileName.setText(name);
+        txtEmail.setText(email);
 
-        fragcont = (RelativeLayout) findViewById(R.id.frag_container);
+        Home home = new Home();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.frag_container, home, home.getTag()).commit();
     }
 
     @Override
@@ -69,10 +71,16 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
+            Home home = new Home();
 
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.frag_container, home, home.getTag()).commit();
         }
         else if (id == R.id.nav_history) {
+            History history = new History();
 
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.frag_container, history, history.getTag()).commit();
         }
         else if (id == R.id.nav_logout) {
             SharedPreferences sharedPreferences = getSharedPreferences("User", Context.MODE_PRIVATE);

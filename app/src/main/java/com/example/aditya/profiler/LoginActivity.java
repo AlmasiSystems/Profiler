@@ -3,6 +3,7 @@ package com.example.aditya.profiler;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,7 +19,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Transaction;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -36,6 +42,8 @@ public class LoginActivity extends AppCompatActivity {
 
         final SharedPreferences sharedPreferences = getSharedPreferences("User", Context.MODE_PRIVATE);
         String shared_email = sharedPreferences.getString("email", null);
+
+        final String[] name = new String[1];
 
         if (shared_email != null){
             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
@@ -64,14 +72,48 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Login failed", Toast.LENGTH_SHORT).show();
                         }
                         else {
-                            String uid = mAuth.getCurrentUser().getUid();
-                            String usernm = userc.getuname(uid);
-                            Toast.makeText(getApplicationContext(), usernm, Toast.LENGTH_SHORT).show();
-                            /*SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString("email", emailstr);
-                            editor.commit();
-                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                            startActivity(intent);*/
+                            FirebaseDatabase.getInstance().getReference("users").addChildEventListener(new ChildEventListener() {
+                                @Override
+                                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                    name[0] = dataSnapshot.child("Username").getValue(String.class);
+                                }
+
+                                @Override
+                                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                                }
+
+                                @Override
+                                public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                                }
+
+                                @Override
+                                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+                            FirebaseDatabase.getInstance().getReference("users").addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putString("email", emailstr);
+                                    editor.putString("user", name[0]);
+                                    editor.commit();
+                                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                    startActivity(intent);
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
                         }
                     }
                 });
