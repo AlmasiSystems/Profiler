@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.aditya.profiler.AddProfile">
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textInputLayout"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="29dp"
+        android:layout_alignParentStart="true">
+
+        <EditText
+            android:id="@+id/name_prof"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Restaurant's Name" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textInputLayout"
+        android:id="@+id/textInputLayout2">
+
+        <EditText
+            android:id="@+id/email_prof"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:inputType="textEmailAddress"
+            android:hint="Email" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textInputLayout2"
+        android:layout_alignParentStart="true"
+        android:id="@+id/textInputLayout3">
+
+        <EditText
+            android:id="@+id/phone_prof"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:inputType="number"
+            android:hint="Phone Number" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textInputLayout3"
+        android:layout_alignParentStart="true"
+        android:id="@+id/textInputLayout4">
+
+        <EditText
+            android:id="@+id/ownername_prof"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:hint="Owner's name" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textInputLayout4"
+        android:layout_alignParentStart="true">
+
+        <EditText
+            android:id="@+id/address_prof"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:hint="Address..."
+            android:lines="4"
+            android:gravity="top"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:text="Save"
+        android:id="@+id/save_prof"/>
+</RelativeLayout>

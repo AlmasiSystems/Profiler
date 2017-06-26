@@ -21,6 +21,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -62,6 +71,10 @@ public class HomeActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            startActivity(intent);
+            finish();
         }
     }
 

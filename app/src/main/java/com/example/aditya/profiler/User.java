@@ -18,7 +18,7 @@ import java.util.Map;
 import static android.content.ContentValues.TAG;
 
 @IgnoreExtraProperties
-public class User extends HashMap<String, String> {
+public class User{
 
     private DatabaseReference database = FirebaseDatabase.getInstance().getReference();
 
