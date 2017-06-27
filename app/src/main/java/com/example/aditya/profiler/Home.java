@@ -19,10 +19,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-/**
- * Created by Aditya on 22-Jun-17.
- */
-
 public class Home extends Fragment{
 
     TextView number;

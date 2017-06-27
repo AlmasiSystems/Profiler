@@ -14,13 +14,19 @@ import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class ViewProfile extends AppCompatActivity {
 
@@ -36,6 +42,8 @@ public class ViewProfile extends AppCompatActivity {
         setTitle("View profiles");
         listView = (ListView) findViewById(R.id.grid);
         FirebaseDatabase.getInstance().getReference().keepSynced(true);
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        final String userID = auth.getCurrentUser().getUid();
 
         FirebaseDatabase.getInstance().getReference("data").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -49,6 +57,10 @@ public class ViewProfile extends AppCompatActivity {
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
+                        Date date = new Date();
+
+                        FirebaseDatabase.getInstance().getReference("history").child(userID).child(dateFormat.format(date).toString()).setValue(names.get(position));
                         Intent intent = new Intent(ViewProfile.this, ProfileActivity.class);
                         intent.putExtra("Name", names.get(position));
                         startActivity(intent);
