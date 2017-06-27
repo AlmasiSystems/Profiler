@@ -28,10 +28,18 @@ public class History extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.frag_history, container, false);
         listView = (ListView) v.findViewById(R.id.list_history);
+
+        FirebaseDatabase.getInstance().getReference().keepSynced(true);
+        return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         String userID = mAuth.getCurrentUser().getUid();
 
-        FirebaseDatabase.getInstance().getReference().keepSynced(true);
         FirebaseDatabase.getInstance().getReference("history").child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -67,6 +75,5 @@ public class History extends Fragment {
 
             }
         });
-        return v;
     }
 }
