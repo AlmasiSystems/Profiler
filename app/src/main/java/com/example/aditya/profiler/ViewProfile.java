@@ -43,7 +43,7 @@ public class ViewProfile extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     names.add(snapshot.getKey());
                 }
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.list_item, names);
+                final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.list_item, names);
                 listView.setAdapter(arrayAdapter);
 
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -57,7 +57,7 @@ public class ViewProfile extends AppCompatActivity {
 
                 listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                     @Override
-                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                         final String name = names.get(position);
 
                         FirebaseDatabase.getInstance().getReference("data").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -72,6 +72,8 @@ public class ViewProfile extends AppCompatActivity {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 query.getRef().removeValue();
+                                                names.remove(position);
+                                                arrayAdapter.notifyDataSetChanged();
                                             }
                                         });
                                         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
