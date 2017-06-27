@@ -48,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         if (shared_email != null){
             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
             startActivity(intent);
+            finish();
         }
 
         mAuth = FirebaseAuth.getInstance();
@@ -107,6 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                                     editor.commit();
                                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                     startActivity(intent);
+                                    finish();
                                 }
 
                                 @Override

@@ -1,7 +1,9 @@
 package com.example.aditya.profiler;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -50,6 +52,46 @@ public class ViewProfile extends AppCompatActivity {
                         Intent intent = new Intent(ViewProfile.this, ProfileActivity.class);
                         intent.putExtra("Name", names.get(position));
                         startActivity(intent);
+                    }
+                });
+
+                listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                        final String name = names.get(position);
+
+                        FirebaseDatabase.getInstance().getReference("data").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (final DataSnapshot query : dataSnapshot.getChildren()){
+                                    if (query.getKey().equals(name)){
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(ViewProfile.this);
+                                        builder.setTitle("Delete");
+                                        builder.setMessage("Are you sure?");
+                                        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                query.getRef().removeValue();
+                                            }
+                                        });
+                                        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                            }
+                                        });
+                                        final AlertDialog dialog = builder.create();
+                                        dialog.show();
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                        return true;
                     }
                 });
             }
