@@ -71,35 +71,14 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Login failed", Toast.LENGTH_SHORT).show();
                         }
                         else {
-                            FirebaseDatabase.getInstance().getReference("users").addChildEventListener(new ChildEventListener() {
-                                @Override
-                                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                                    name[0] = dataSnapshot.child("Username").getValue(String.class);
-                                }
-
-                                @Override
-                                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                                }
-
-                                @Override
-                                public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                                }
-
-                                @Override
-                                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                                }
-
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-
-                                }
-                            });
                             FirebaseDatabase.getInstance().getReference("users").addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
+                                    for(DataSnapshot ds: dataSnapshot.child(mAuth.getCurrentUser().getUid()).getChildren()){
+                                        if(ds.getKey().equals("Username")){
+                                            name[0] = ds.getValue().toString();
+                                        }
+                                    }
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
                                     editor.putString("email", emailstr);
                                     editor.putString("user", name[0]);

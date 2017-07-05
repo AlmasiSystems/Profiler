@@ -15,7 +15,7 @@
             android:layout_height="180dp"
             android:background="#212121"
             android:paddingTop="10dp"
-            app:srcCompat="@drawable/common_google_signin_btn_icon_dark_pressed" />
+            app:srcCompat="@drawable/googleg_standard_color_18" />
 
     <TextView
         android:text="Exercise Name"
